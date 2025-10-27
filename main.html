@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soumen Mishra | Professional Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main_css.css">
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader" aria-label="Loading content" role="alert" aria-live="assertive">
+    <div class="preloader-content">
+      <div class="ghost-loader" aria-hidden="true">
+        <svg class="ghost-svg" height="80" viewBox="0 0 512 512" width="80" xmlns="http://www.w3.org/2000/svg">
+          <path class="ghost-body"
+           d="m508.374 432.802s-46.6-39.038-79.495-275.781c-8.833-87.68-82.856-156.139-172.879-156.139-90.015 0-164.046 68.458-172.879 156.138-32.895 236.743-79.495 275.782-79.495 275.782-15.107 25.181 20.733 28.178 38.699 27.94 35.254-.478 35.254 40.294 70.516 40.294 35.254 0 35.254-35.261 70.508-35.261s37.396 45.343 72.65 45.343 37.389-45.343 72.651-45.343c35.254 0 35.254 35.261 70.508 35.261s35.27-40.772 70.524-40.294c17.959.238 53.798-2.76 38.692-27.94z" fill="white"/>
+          <circle class="ghost-eye left-eye" cx="208" cy="225" r="22" fill="black"/>
+          <circle class="ghost-eye right-eye" cx="297" cy="225" r="22" fill="black"/>
+        </svg>
+      </div>
+      <div class="loading-text">Preparing your experience…</div>
+      <div class="loading-progress">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-content">
+    <!-- Header -->
+    <!-- <header>
+      <span class="developed-by">Soumen Mishra</span>
+      <nav>
+        <ul>
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#abilities" class="nav-link">Abilities</a></li>
+          <li><a href="#contacts" class="nav-link">Contacts</a></li>
+        </ul>
+      </nav>
+    </header> -->
+
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section id="hero" class="hero-area">
+        <!-- Lamp illustration -->
+        <div class="lamp-illustration">
+          <div class="lamp-rope"></div>
+          <div class="lamp-head">
+            <div class="lamp-semicircle"></div>
+            <div class="lamp-bulb"></div>
+          </div>
+          <div class="lamp-glow"></div>
+        </div>
+        <!-- Hero content -->
+        <div class="hero-content">
+          <h1 class="hero-title">AI Developer</h1>
+          <h2 class="hero-subtitle">Soumen Mishra</h2>
+          <a href="#about" class="hero-btn">ABOUT ME</a>
+        </div>
+      </section>
+
+       <!-- About Section -->
+      <section id="about" class="about-section">
+        <div class="about-container">
+          <h2 class="about-title">About <span class="accent">Me</span></h2>
+          
+          <!-- 🔧 FIXED: Simplified Card Carousel -->
+          <div class="cards">
+            <div class="card-wrapper">
+              <div class="card active" data-card="1">
+                <!-- 🔧 FIXED: Using placeholder images instead of external URLs -->
+                <div class="card-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">👨‍💻</div>
+                <div class="card-data">
+                  <span class="card-num">1/7</span>
+                  <h3>Who am I?</h3>
+                  <p>I'm a passionate Full Stack Developer with over 5 years of experience creating web applications. I specialize in JavaScript technologies and focus on building functional, engaging user experiences.</p>
+                </div>
+              </div>
+
+              <div class="card" data-card="2">
+                <div class="card-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">🌐</div>
+                <div class="card-data">
+                  <span class="card-num">2/7</span>
+                  <h3>Web Development</h3>
+                  <p>Building robust and scalable web applications from front to back-end, ensuring clean code and modern development practices with the latest technologies.</p>
+                </div>
+              </div>
+
+              <div class="card" data-card="3">
+                <div class="card-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">📱</div>
+                <div class="card-data">
+                  <span class="card-num">3/7</span>
+                  <h3>Responsive Design</h3>
+                  <p>Crafting websites that provide optimal viewing experiences across a wide range of devices, from mobile phones to desktop monitors with pixel-perfect precision.</p>
+                </div>
+              </div>
+
+              <div class="card" data-card="4">
+                <div class="card-img" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">🎨</div>
+                <div class="card-data">
+                  <span class="card-num">4/7</span>
+                  <h3>UI/UX Design</h3>
+                  <p>Focusing on creating intuitive, efficient, and enjoyable user interfaces to enhance user satisfaction and engagement through thoughtful design decisions.</p>
+                </div>
+              </div>
+
+              <div class="card" data-card="5">
+                <div class="card-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">⚙️</div>
+                <div class="card-data">
+                  <span class="card-num">5/7</span>
+                  <h3>Backend Development</h3>
+                  <p>Developing server-side logic, APIs, and database architecture that power web applications behind the scenes with security and performance in mind.</p>
+                </div>
+              </div>
+
+              <div class="card" data-card="6">
+                <div class="card-img" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center; color: #333; font-size: 48px;">🗄️</div>
+                <div class="card-data">
+                  <span class="card-num">6/7</span>
+                  <h3>Database Design</h3>
+                  <p>Structuring and managing data efficiently with both SQL and NoSQL databases to ensure data integrity, performance, and scalability for applications.</p>
+                </div>
+              </div>
+
+              <div class="card" data-card="7">
+                <div class="card-img" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); display: flex; align-items: center; justify-content: center; color: #333; font-size: 48px;">⚡</div>
+                <div class="card-data">
+                  <span class="card-num">7/7</span>
+                  <h3>Performance Optimization</h3>
+                  <p>Analyzing and improving application speed and efficiency to deliver faster, more responsive user experiences through advanced optimization techniques.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 🔧 FIXED: Simplified Navigation -->
+            <div class="card-navigation">
+              <button class="nav-btn prev" aria-label="Previous card">❮</button>
+              <div class="card-indicators">
+                <button class="indicator active" data-card="1"></button>
+                <button class="indicator" data-card="2"></button>
+                <button class="indicator" data-card="3"></button>
+                <button class="indicator" data-card="4"></button>
+                <button class="indicator" data-card="5"></button>
+                <button class="indicator" data-card="6"></button>
+                <button class="indicator" data-card="7"></button>
+              </div>
+              <button class="nav-btn next" aria-label="Next card">❯</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Abilities Section -->
+      <section id="abilities" class="placeholder-section">
+        <div class="placeholder-content">
+          <h2>Abilities</h2>
+          <p>Coming soon - showcase of technical skills and expertise</p>
+        </div>
+      </section>
+
+      <!-- Contacts Section -->
+      <section id="contacts" class="placeholder-section">
+        <div class="placeholder-content">
+          <h2>Contacts</h2>
+          <p>Coming soon - get in touch and let's work together</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
