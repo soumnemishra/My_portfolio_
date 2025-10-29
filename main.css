@@ -1,0 +1,1939 @@
+/* **FIXED: Better CSS Variables Organization** */
+:root {
+  --primary-bg: #000000;
+  --primary-text: #ffffff;
+  --accent-color: #60a5fa; /* Light blue */
+  --muted-text: #9ca3af;   /* Grey */
+  --secondary-bg: #111827; /* Darker grey for cards/toggles */
+  --card-shadow: hsla(0, 0%, 0%, 0.4);
+  --max-width: 1200px;
+  --header-height: 60px; /* Kept for scroll-padding */
+  --border-radius: 8px;
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* **FIXED: Improved Reset with Better Accessibility** */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* **FIXED: Scrollbar handling - keeping accessibility** */
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* --- Scroll Down Link (Adapted from Jack) --- */
+.scroll-down {
+  display: block;
+  position: absolute;
+  bottom: 80px;
+  right: -30px; /* Position slightly outside the hero area */
+  color: var(--muted-text);
+  font-size: 1.1rem; /* Your desired font size */
+  font-family: "Poppins", sans-serif; /* Your font */
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: rotate(90deg);
+  transform-origin: top right; /* Rotate from top-right */
+  text-decoration: none;
+  transition: color var(--transition-smooth);
+  z-index: 20;
+}
+
+/* Small line next to the text */
+.scroll-down::after {
+  content: '';
+  position: absolute;
+  top: 8px; /* Align vertically with text */
+  right: -50px; /* Position relative to the link */
+  width: 30px;
+  height: 2px;
+  background: var(--muted-text);
+  transition: background var(--transition-smooth);
+}
+
+.scroll-down:hover,
+.scroll-down:focus {
+  color: var(--primary-text); /* Highlight on hover */
+  outline: none;
+}
+
+.scroll-down:hover::after,
+.scroll-down:focus::after {
+  background: var(--primary-text); /* Highlight line on hover */
+}
+
+/* --- Hero Social Links --- */
+.tooltip {
+  position: absolute;
+  background: var(--accent-color); /* Your accent color */
+  color: var(--primary-bg);       /* Your background color */
+  min-width: max-content;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px; /* Slightly smaller tooltip text */
+  font-weight: 500;
+  padding: 4px 8px; /* Smaller padding */
+  border-radius: var(--border-radius);
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-smooth); /* Use 'all' for transform+opacity */
+  z-index: 100; /* Ensure tooltip is above other elements */
+
+  /* Default position (above element) */
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-5px); /* Start slightly lower */
+}
+
+
+/* Position the list on the left */
+.hero-social-list {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: clamp(20px, 5vw, 40px); /* Aligns with your page padding */
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+/* The small vertical line below the icons */
+.hero-social-list::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* Places line below the list */
+  left: 10px;  /* Aligns with the icons */
+  margin-top: 15px;
+  width: 2px;
+  height: 30px;
+  background: var(--muted-text);
+}
+
+.hero-social-link {
+  position: relative; /* Needed for absolute positioning of tooltip */
+  color: var(--muted-text);
+  margin-block: 10px; /* Spacing between icons */
+  padding: 5px;
+  font-size: 22px;
+  transition: var(--transition-smooth);
+  display: block; /* Ensures proper layout */
+}
+
+/* Hover effect for the icon */
+.hero-social-link:is(:hover, :focus) {
+  color: var(--primary-text);
+  transform: scale(1.1);
+}
+
+/* Tooltip positioning for social links (to the right) */
+.hero-social-link .tooltip {
+  bottom: auto; /* Override default bottom */
+  top: 50%;
+  left: calc(100% + 15px);
+  transform: translateY(-50%) translateX(10px); /* Start slightly to the right */
+}
+
+/* Tooltip hover effect */
+.hero-social-link:is(:hover, :focus) .tooltip {
+  transform: translateY(-50%) translateX(0); /* Move to final position */
+  opacity: 1;
+}
+
+/* **OPTIMIZED: Preloader with better performance** */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity var(--transition-slow);
+  will-change: opacity;
+}
+
+#preloader.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader-content {
+  text-align: center;
+  color: #e0e0e0;
+}
+
+.ghost-loader {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* **OPTIMIZED: Better animation performance** */
+.ghost-svg {
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+  animation: ghostFloat 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+.ghost-body {
+  fill: white;
+  opacity: 0.9;
+}
+
+.ghost-eye {
+  fill: black;
+  animation: eyePulse 2s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.left-eye { animation-delay: 0s; }
+.right-eye { animation-delay: 0.1s; }
+
+/* **OPTIMIZED: GPU-accelerated animations** */
+@keyframes ghostFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
+@keyframes eyePulse {
+  0%, 100% { transform: scale3d(1, 1, 1); }
+  50% { transform: scale3d(1.2, 1.2, 1); }
+}
+
+.loading-text {
+  font-family: monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.loading-progress {
+  width: 96px;
+  height: 2px;
+  margin: 0 auto;
+  border-radius: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff80, #00cc66);
+  width: 0%;
+  transition: width 0.8s ease;
+  opacity: 0.8;
+  will-change: width;
+}
+
+#main-content {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity var(--transition-slow), visibility 0s var(--transition-slow);
+  width: 100%;
+}
+
+#main-content.visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Hero Section - Your lamp design preserved */
+.hero-area {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  padding: 40px clamp(20px, 5vw, 40px) 40px;
+  background: radial-gradient(
+    ellipse 80% 60% at center 30%,
+    rgba(15, 15, 15, 1) 0%,
+    rgba(8, 8, 8, 1) 40%,
+    rgba(0, 0, 0, 1) 70%
+  );
+  /* Removed overflow: hidden; */
+}
+
+/* **KEPT: Your original lamp design** */
+.lamp-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 70px;
+  position: relative;
+  height: auto;
+  z-index: 10;
+  margin-top: -40px;
+}
+
+.lamp-rope {
+  width: 2px;
+  height: 150px;
+  background: var(--primary-text);
+  position: relative;
+  z-index: 15;
+  margin-bottom: -1px;
+}
+
+.lamp-head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  height: 100px;
+}
+
+.lamp-head::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 15px;
+  background: var(--primary-bg);
+  border: 2px solid var(--primary-text);
+  border-radius: 3px 3px 6px 6px;
+  z-index: 16;
+  box-sizing: border-box;
+}
+
+.lamp-semicircle {
+  width: 120px;
+  height: 60px;
+  background: var(--primary-bg);
+  border: 2px solid var(--primary-text);
+  border-bottom: none;
+  border-radius: 60px 60px 0 0;
+  position: relative;
+  z-index: 15;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 -3px 0 rgba(255, 255, 255, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.lamp-semicircle::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  height: calc(100% - 12px);
+  border-top: 1px solid var(--primary-text);
+  border-left: 1px solid var(--primary-text);
+  border-right: 1px solid var(--primary-text);
+  border-radius: 48px 48px 0 0;
+  opacity: 0.6;
+}
+
+.lamp-semicircle::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 4px);
+  height: 3px;
+  background: var(--primary-bg);
+  border-left: 2px solid var(--primary-text);
+  border-right: 2px solid var(--primary-text);
+  border-bottom: 1px solid var(--primary-text);
+  border-radius: 0 0 2px 2px;
+  z-index: 14;
+}
+
+.lamp-bulb {
+  width: 28px;
+  height: 28px;
+  background: var(--primary-text);
+  border-radius: 50%;
+  position: absolute;
+  top: 78px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow:
+    0 0 25px rgba(255, 255, 255, 0.9),
+    0 0 50px rgba(255, 255, 255, 0.7),
+    0 0 75px rgba(255, 255, 255, 0.5);
+  z-index: 20;
+}
+
+.lamp-bulb::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 18px;
+  background: var(--primary-text);
+  z-index: 19;
+}
+
+.lamp-glow {
+  position: absolute;
+  top: 145px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 200px;
+  background: radial-gradient(
+    ellipse 60% 40% at center top,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.1) 60%,
+    transparent 100%
+  );
+  filter: blur(35px);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Hero Content */
+.hero-content {
+  text-align: center;
+  z-index: 10;
+  max-width: var(--max-width);
+  width: 100%;
+  padding: 0 clamp(20px, 5vw, 40px);
+  box-sizing: border-box;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 300;
+  line-height: 0.9;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  margin-bottom: 50px;
+  opacity: 0.95;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.hero-btn {
+  display: inline-block;
+  padding: 18px 42px;
+  border: 2px solid var(--primary-text);
+  background: transparent;
+  color: var(--primary-text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
+  border-radius: var(--border-radius);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  will-change: transform, background-color;
+}
+
+.hero-btn:hover,
+.hero-btn:focus {
+  background: var(--primary-text);
+  color: var(--primary-bg);
+  transform: translate3d(0, -2px, 0);
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.4),
+    0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content::after {
+  content: "";
+  display: block;
+  margin: 60px auto 0;
+  width: 300px;
+  height: 60px;
+  background: radial-gradient(ellipse at center,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0.3) 60%,
+            transparent 100%);
+  filter: blur(8px);
+  border-radius: 50%;
+}
+/*
+=================================================
+START: New Hero Button Layout
+=================================================
+*/
+
+.hero-buttons-container {
+  display: flex;
+ flex-direction: row; /* Aligns items side-by-side */
+  flex-wrap: wrap;     /* Allows them to stack on very small screens */
+  justify-content: center; /* Keeps the button group centered */
+  align-items: center;     /* Vertically aligns buttons (good for different heights) */
+  gap: 20px;             /* Adds space BETWEEN the buttons */
+}
+
+
+/*
+=================================================
+START: Animated Download CV Button Styles
+(Themed to your :root variables)
+=================================================
+*/
+
+/* --- Keyframe Animations --- */
+@keyframes text {
+  10%,
+  85% {
+    transform: translateY(-100%);
+  }
+  95%,
+  100% {
+    transform: translateY(-200%);
+  }
+}
+
+@keyframes line {
+  5%,
+  10% {
+    transform: translateY(-30px);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  65% {
+    transform: translateY(0);
+  }
+  75%,
+  100% {
+    transform: translateY(30px);
+  }
+}
+
+@keyframes svg {
+  0%,
+  20% {
+    stroke-dasharray: 0;
+    stroke-dashoffset: 0;
+  }
+  21%,
+  89% {
+    stroke-dasharray: 26px;
+    stroke-dashoffset: 26px;
+    stroke-width: 3px;
+    margin: -10px 0 0 -10px;
+    stroke: var(--checkmark); /* Uses variable */
+  }
+  100% {
+    stroke-dasharray: 26px;
+    stroke-dashoffset: 0;
+    margin: -10px 0 0 -10px;
+    stroke: var(--checkmark); /* Uses variable */
+  }
+  12% {
+    opacity: 1;
+  }
+  20%,
+  89% {
+    opacity: 0;
+  }
+  90%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes background {
+  10% {
+    transform: scaleY(0);
+  }
+  40% {
+    transform: scaleY(0.15);
+  }
+  65% {
+    transform: scaleY(0.5);
+    border-radius: 0 0 50% 50%;
+  }
+  75% {
+    border-radius: 0 0 50% 50%;
+  }
+  90%,
+  100% {
+    border-radius: 0;
+  }
+  75%,
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* --- Main Button Styles --- */
+.button {
+  /* Default variables (unused, but kept for structure) */
+  --background: #275efe;
+  --rectangle: #184fee;
+  --success: #184fee;
+  --text: #fff;
+  --arrow: #fff;
+  --checkmark: #fff;
+  --shadow: rgba(10, 22, 50, 0.24);
+  
+  display: flex;
+  overflow: hidden;
+  text-decoration: none;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  background: var(--background);
+  border-radius: 8px; /* Matches your --border-radius */
+  box-shadow: 0 2px 8px -1px var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit; /* Inherit Poppins font */
+}
+
+/* --- This is your new theme class --- */
+.button.cv-button {
+  --background: var(--secondary-bg); /* Your dark grey/blue */
+  --rectangle: var(--primary-bg);   /* Your black */
+  --success: var(--accent-color);   /* Your light blue */
+  --text: var(--primary-text);      /* Your white */
+  --arrow: var(--primary-text);     /* Your white */
+  --checkmark: var(--primary-bg);   /* Black checkmark for light blue bg */
+  --shadow: var(--card-shadow);     /* Your existing shadow */
+}
+
+.button:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 4px -1px var(--shadow);
+}
+
+.button ul {
+  margin: 0;
+  padding: 16px 30px; /* Slightly less padding */
+  list-style: none;
+  text-align: center;
+  position: relative;
+  backface-visibility: hidden;
+  font-size: 15px; /* Matched to your hero-btn */
+  font-weight: 500;
+  line-height: 28px;
+  color: var(--text);
+}
+/* 
+.button ul li {
+ 
+} */
+.button ul li:not(:first-child) {
+  top: 16px;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+.button ul li:nth-child(2) {
+  top: 76px;
+}
+.button ul li:nth-child(3) {
+  top: 136px;
+}
+
+.button > div {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: var(--rectangle);
+}
+.button > div:before,
+.button > div:after {
+  content: '';
+  display: block;
+  position: absolute;
+}
+.button > div:before {
+  border-radius: 1px;
+  width: 2px;
+  top: 50%;
+  left: 50%;
+  height: 17px;
+  margin: -9px 0 0 -1px;
+  background: var(--arrow);
+}
+.button > div:after {
+  width: 60px;
+  height: 60px;
+  transform-origin: 50% 0;
+  border-radius: 0 0 80% 80%;
+  background: var(--success);
+  top: 0;
+  left: 0;
+  transform: scaleY(0);
+}
+.button > div svg {
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 50%;
+  top: 50%;
+  margin: -9px 0 0 -10px;
+  fill: none;
+  z-index: 1;
+  stroke-width: 2px;
+  stroke: var(--arrow);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- Animation Trigger --- */
+.button.loading ul {
+  animation: text calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * 0.065ms);
+}
+.button.loading > div:before {
+  animation: line calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * 0.065ms);
+}
+.button.loading > div:after {
+  animation: background calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * 0.065ms);
+}
+.button.loading > div svg {
+  animation: svg calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * 0.065ms);
+}
+
+/*
+=================================================
+END: Animated Download CV Button Styles
+=================================================
+*/
+/* About Section */
+.about-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-bg);
+  padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 40px);
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden; /* Keep this for the about section card carousel */
+}
+
+/* Use common container class */
+.section-container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+
+.about-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: clamp(40px, 8vh, 80px);
+  color: var(--primary-text);
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.about-title .accent {
+  color: var(--accent-color);
+}
+
+.about-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-color), #3b82f6);
+  border-radius: 2px;
+}
+
+/* Simplified Card Carousel */
+.cards {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.card-wrapper {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 3rem;
+  padding: 3rem;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+
+.card.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.card-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-img {
+  transform: scale(1.05);
+}
+
+.card-data {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-num {
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+.card-data h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary-text);
+  margin-bottom: 1rem;
+}
+
+.card-data p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--muted-text);
+}
+
+/* Card Navigation */
+.card-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card-indicators {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active,
+.indicator:hover {
+  background: var(--accent-color);
+  transform: scale(1.2);
+}
+
+.nav-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary-text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all var(--transition-smooth);
+  backdrop-filter: blur(10px);
+  will-change: transform, background-color;
+}
+
+.nav-btn:hover,
+.nav-btn:focus {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: scale(1.1);
+  outline: none;
+}
+
+/* ********************************** */
+/* ***** HIGHLIGHTED CHANGE START ***** */
+/* ********************************** */
+/* --- Abilities Section --- */
+.abilities-section {
+  min-height: 80vh; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #111111 0%, #000000 100%);
+  padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 40px);
+  max-width: 100vw;
+  box-sizing: border-box;
+  position: relative; /* Needed for absolute positioning of subtitle */
+}
+
+/* New wrapper for Grid layout */
+.abilities-grid-wrapper {
+  display: block; /* Default: stack */
+}
+
+/* Grid layout for larger screens */
+@media (min-width: 992px) {
+  .abilities-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    align-items: center; /* Vertically center content in columns */
+    gap: 50px;
+  }
+}
+
+/* Text content area */
+.abilities-content {
+  position: relative; /* Needed for absolute positioning of subtitle */
+  text-align: center; /* Center text by default */
+  margin-bottom: 50px; /* Space below text on mobile */
+}
+
+/* Left-align text content on larger screens */
+@media (min-width: 992px) {
+  .abilities-content {
+    text-align: left;
+    margin-bottom: 0; /* Remove bottom margin */
+    padding-left: 40px; /* Add padding like Jack's example */
+  }
+}
+
+/* Common Section Title */
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--primary-text);
+}
+.section-title .accent {
+  color: var(--accent-color);
+}
+
+/* Common Section Text */
+.section-text {
+  color: var(--muted-text);
+  line-height: 1.7;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  max-width: 500px; /* Limit text width */
+  margin-left: auto; /* Center on mobile */
+  margin-right: auto; /* Center on mobile */
+}
+@media (min-width: 992px) {
+  .section-text {
+      margin-left: 0; /* Align left on desktop */
+      margin-right: 0; /* Align left on desktop */
+  }
+}
+
+/* Section Subtitle (Vertical on Desktop) */
+.section-subtitle {
+  color: var(--muted-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px; /* Default margin for mobile */
+  position: relative; /* Default position */
+  padding-bottom: 5px;
+}
+.section-subtitle::after { /* The small line under subtitle on mobile */
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: var(--muted-text);
+}
+
+/* Vertical Subtitle Styling (Desktop) */
+@media (min-width: 992px) {
+  .abilities-content .section-subtitle {
+    position: absolute;
+    top: 0;
+    left: 0; /* Position relative to .abilities-content */
+    transform: rotate(0.75turn) translateX(-100%); /* Rotate and shift */
+    transform-origin: left top; /* Rotate from top-left */
+    margin-bottom: 0; /* Remove bottom margin */
+    padding-bottom: 0; /* Remove bottom padding */
+    white-space: nowrap; /* Prevent wrapping */
+  }
+  .abilities-content .section-subtitle::after { /* Reposition the line */
+    top: 8px; /* Align vertically with text */
+    left: auto; /* Remove left positioning */
+    right: calc(100% + 20px); /* Position to the left of text */
+    transform: none; /* Remove centering transform */
+  }
+}
+
+/* Skills Toggle Buttons */
+.skills-toggle {
+  background: var(--secondary-bg);
+  position: relative;
+  width: max-content;
+  margin-inline: auto; /* Center toggle */
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px var(--card-shadow);
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+@media (min-width: 992px) {
+    .skills-toggle {
+        margin-inline: 0; /* Align left on desktop */
+    }
+}
+
+.skills-toggle::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  bottom: 5px;
+  width: calc(50% - 5px);
+  background: var(--accent-color);
+  border-radius: 50px;
+  transition: left var(--transition-smooth);
+  z-index: -1;
+}
+.skills-toggle.active::before {
+  left: 50%;
+}
+
+.toggle-btn {
+  color: var(--primary-text);
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  padding: 8px 30px;
+  border-radius: 50px;
+  transition: color var(--transition-smooth);
+  z-index: 1;
+  width: 120px;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.toggle-btn.active {
+  color: var(--primary-bg);
+}
+
+/* Skills Box Container */
+.skills-box {
+  width: 100%;
+  max-width: 500px; /* Limit width on mobile for better grid */
+  margin: 0 auto; /* Center on mobile */
+  position: relative;
+  min-height: 200px;
+}
+@media (min-width: 992px) {
+  .skills-box {
+    max-width: none; /* Allow full width in grid column */
+  }
+}
+
+/* Hide inactive list */
+.skills-box.active .skills-list,
+.skills-box:not(.active) .tools-list {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0; left: 0; width: 100%;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; /* Use smaller gap for consistency */
+}
+
+/* Style visible list */
+.skills-box .skills-list,
+.skills-box .tools-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center items within the grid */
+  align-items: center;
+  gap: 15px; /* Adjusted gap */
+  transition: opacity 0.4s ease-out;
+  width: 100%;
+}
+.skills-box:not(.active) .skills-list,
+.skills-box.active .tools-list {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+}
+
+/* Individual Skill/Tool Card */
+.skills-card {
+  position: relative;
+  background: var(--secondary-bg);
+  width: 80px; /* Slightly smaller card */
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: help;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.skills-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px var(--card-shadow);
+}
+
+/* Tooltip on hover */
+.skills-card .tooltip {
+    /* Override global tooltip position */
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+}
+.skills-card:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Card Icon (using img now) */
+.card-icon img {
+   width: 40px;  /* Adjust size as needed */
+   height: 40px;
+   object-fit: contain; /* Prevent distortion */
+   filter: grayscale(30%) brightness(0.9); /* Subtle filter */
+   transition: filter var(--transition-fast);
+}
+.skills-card:hover .card-icon img {
+    filter: grayscale(0%) brightness(1); /* Full color on hover */
+}
+/* ***** HIGHLIGHTED CHANGE END ***** */
+
+
+/* Placeholder sections */
+.placeholder-section { /* Kept for Contacts */
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); /* Different background */
+  padding: clamp(40px, 8vh, 80px) clamp(20px, 5vw, 40px);
+}
+
+/* Use common container */
+/* .placeholder-content is replaced by .section-container for consistency */
+.placeholder-section .section-container {
+    text-align: center;
+    max-width: 600px;
+}
+.placeholder-section h2 { /* Style h2 inside placeholder */
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--primary-text);
+}
+.placeholder-section p { /* Style p inside placeholder */
+  font-size: 1.1rem;
+  color: var(--muted-text);
+  line-height: 1.6;
+}
+
+
+/* Card rotation variables */
+.card[data-card="1"] { --rotation: 4deg; }
+.card[data-card="2"] { --rotation: -8deg; }
+.card[data-card="3"] { --rotation: -7deg; }
+.card[data-card="4"] { --rotation: 11deg; }
+.card[data-card="5"] { --rotation: 13deg; }
+.card[data-card="6"] { --rotation: -17deg; }
+.card[data-card="7"] { --rotation: 20deg; }
+
+/* Smooth focus management */
+.card:focus-within {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
+  border-radius: var(--border-radius);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) { /* Adjusted breakpoint to match grid */
+  .card {
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 1fr;
+    gap: 2rem;
+    text-align: center;
+    height: auto; /* Allow height to adjust */
+    padding: 2rem; /* Reduce padding */
+  }
+
+  .card-img { /* Use card-img as per your HTML */
+    width: 150px; /* Smaller image */
+    height: 150px;
+    margin: 0 auto; /* Center image */
+  }
+
+  .lamp-illustration {
+    margin-bottom: 50px;
+    margin-top: -20px; /* Adjust lamp position if needed */
+  }
+
+  .lamp-head { width: 90px; height: 75px; }
+  .lamp-semicircle { width: 90px; height: 45px; border-radius: 45px 45px 0 0; }
+  .lamp-rope { height: 80px; }
+  .lamp-bulb { width: 22px; height: 22px; top: 58px; }
+
+  /* Ensure scroll-down link is usable or hidden */
+   .scroll-down {
+     right: -15px; /* Bring it closer */
+     bottom: 60px;
+     font-size: 1rem;
+   }
+   .scroll-down::after {
+       right: -40px;
+       width: 25px;
+   }
+
+   .abilities-section {
+       padding-top: 80px;
+       padding-bottom: 80px;
+   }
+   .skills-toggle {
+       padding: 4px;
+   }
+   .toggle-btn {
+       padding: 6px 20px;
+       width: 100px;
+       font-size: 0.9rem;
+   }
+   .skills-card {
+       width: 70px; /* Smaller cards on mobile */
+       height: 70px;
+   }
+   .card-icon img {
+       width: 35px; /* Smaller icons */
+       height: 35px;
+   }
+}
+
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* --- Go To Top Button --- */
+.go-top {
+  position: fixed;
+  bottom: 25px;
+  right: clamp(20px, 5vw, 40px); /* Align with page padding */
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.1); /* Subtle background */
+  border: 2px solid var(--muted-text);
+  color: var(--muted-text);
+  border-radius: 50%;
+  display: grid; /* Center the icon */
+  place-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  pointer-events: none; /* Not clickable when hidden */
+  transform: translateY(10px); /* Start slightly lower */
+  transition: all var(--transition-smooth);
+  z-index: 1000;
+  backdrop-filter: blur(5px); /* Optional: Frosted glass effect */
+}
+
+.go-top.active {
+  opacity: 1; /* Visible */
+  pointer-events: auto; /* Clickable */
+  transform: translateY(0); /* Move to final position */
+}
+
+.go-top:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--primary-bg); /* Match your accent text color */
+}
+
+/*  this is for the contact and project place sections  */
+
+/* --- Portfolio Section (My Works) --- */
+
+.portfolio-section {
+  padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 40px);
+  background-color: var(--primary-bg); /* Match background */
+  max-width: 100vw;
+  box-sizing: border-box;
+  position: relative; /* Needed for subtitle */
+}
+
+/* New: Wrapper for Grid layout *
+.portfolio-layout-container {
+  
+}
+/
+
+/* Grid layout for larger screens */
+@media (min-width: 992px) {
+  .portfolio-layout-container {
+    display: grid;
+    grid-template-columns: minmax(250px, 1fr) 2fr; /* Ratio for text vs grid */
+    align-items: flex-start; /* Align text block to top */
+    gap: 50px;
+  }
+}
+
+/* Section Introduction Area */
+.portfolio-intro {
+  text-align: center; /* Center intro text on mobile */
+  margin-bottom: clamp(40px, 8vh, 60px); /* Space below intro */
+  position: relative; /* Needed for subtitle positioning */
+}
+
+/* Left-align text content on larger screens */
+@media (min-width: 992px) {
+  .portfolio-intro {
+    text-align: left;
+    margin-bottom: 0;
+    padding-left: 40px; /* Add padding like Jack's example */
+    /* Ensure it stays aligned top left within its grid area */
+    align-self: start;
+    position: relative; /* Ensure subtitle stays relative */
+  }
+
+  /* Vertical Subtitle Styling (Desktop) - Applied to portfolio intro */
+  .portfolio-intro .section-subtitle {
+    position: absolute;
+    top: 0;
+    left: 0; /* Position relative to .portfolio-intro */
+    transform: rotate(0.75turn) translateX(-100%); /* Rotate and shift */
+    transform-origin: left top; /* Rotate from top-left */
+    margin-bottom: 0; /* Remove bottom margin */
+    padding-bottom: 0; /* Remove bottom padding */
+    white-space: nowrap; /* Prevent wrapping */
+  }
+  .portfolio-intro .section-subtitle::after { /* Reposition the line */
+    top: 8px; /* Align vertically with text */
+    left: auto; /* Remove left positioning */
+    right: calc(100% + 20px); /* Position to the left of text */
+    transform: none; /* Remove centering transform */
+    width: 30px; /* Match Jack's shorter line */
+  }
+
+  .portfolio-intro .section-text {
+     margin-left: 0; /* Align left on desktop */
+     margin-right: 0; /* Align left on desktop */
+     max-width: none; /* Allow text to fill its column */
+   }
+}
+
+
+/* Project Grid List */
+.project-list {
+  display: grid;
+  gap: 30px; /* Gap between cards */
+  list-style: none;
+  grid-template-columns: 1fr; /* Default 1 column */
+}
+
+/* Grid layout adjustments for screen sizes */
+@media (min-width: 550px) {
+  .project-list {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */
+  }
+}
+/* No need for 992px specific columns, auto-fit handles it */
+
+
+/* Individual Project Card */
+.project-card {
+  position: relative;
+  overflow: hidden; /* Important for image zoom and content positioning */
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px hsla(0, 0%, 0%, 0.3);
+  display: block;
+  text-decoration: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px hsla(0, 0%, 0%, 0.4);
+}
+
+.card-banner {
+  display: block; /* Ensure figure behaves */
+  aspect-ratio: 4 / 3;
+  background-color: var(--secondary-bg);
+  overflow: hidden; /* Keep image zoom contained */
+}
+.card-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow) ease;
+}
+.project-card:hover .card-banner img {
+    transform: scale(1.05); /* Zoom in image on hover */
+}
+
+.card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  /* Corrected gradient overlay like Jack's */
+  background: linear-gradient(180deg, transparent 20%, hsla(0, 0%, 0%, 0.8) 100%);
+  z-index: 1;
+}
+
+/* Title and Date - Initially Hidden */
+.project-card .card-title,
+.project-card .publish-date {
+  /* Use Jack's style: semi-transparent background */
+  background: var(--primary-bg); /* Use primary bg, adjust opacity if needed */
+  padding: 6px 12px;
+  width: max-content; /* Fit content */
+  border-radius: 4px;
+  box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.5); /* Add shadow like Jack's */
+  transform: translateY(20px); /* Start below */
+  opacity: 0; /* Start hidden */
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out; /* Smoother transition */
+}
+
+.project-card .card-title {
+  color: var(--primary-text);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.project-card .publish-date {
+  font-size: 0.8rem;
+  color: var(--muted-text); /* Use muted text for date */
+  transition-delay: 0.05s; /* Stagger animation */
+}
+
+/* Animate content slide-in on hover */
+.project-card:hover .card-title,
+.project-card:hover .publish-date {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Load More Button Container */
+.load-more-container {
+    text-align: center;
+    grid-column: 1 / -1; /* Always span full width */
+    margin-top: 10px; /* Add some space above */
+}
+
+.load-more {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 4px;
+  cursor: pointer;
+  transition: color var(--transition-smooth), border-color var(--transition-smooth);
+}
+.load-more:hover {
+  color: var(--primary-text);
+  border-bottom-color: var(--accent-color);
+}
+
+
+/* this is the code for the contacts sections */
+/* ***** HIGHLIGHTED CHANGE START ***** */
+/* --- Contacts Section --- */
+
+.contact-section {
+  padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 40px);
+  background-color: var(--secondary-bg); /* Use secondary background */
+  max-width: 100vw;
+  box-sizing: border-box;
+  position: relative; /* For subtitle */
+}
+
+/* Grid layout for larger screens */
+.contact-grid-wrapper {
+   display: block; /* Default stack */
+}
+@media (min-width: 992px) {
+  .contact-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    align-items: flex-start; /* Align items to top */
+    gap: 50px;
+  }
+}
+
+/* Contact Info Area */
+.contact-content {
+  text-align: center; /* Center on mobile */
+  margin-bottom: 50px;
+}
+@media (min-width: 992px) {
+  .contact-content {
+    text-align: left; /* Left align on desktop */
+    margin-bottom: 0;
+    padding-left: 40px; /* Add padding like Jack's */
+  }
+  .contact-content .section-subtitle { /* Apply vertical style only on desktop */
+     position: absolute;
+     top: 0;
+     left: 0;
+     transform: rotate(0.75turn) translateX(-100%);
+     transform-origin: left top;
+     margin-bottom: 0;
+     padding-bottom: 0;
+     white-space: nowrap;
+   }
+   .contact-content .section-subtitle::after {
+     top: 8px;
+     left: auto;
+     right: calc(100% + 20px);
+     transform: none;
+     width: 30px; /* Match portfolio line */
+   }
+   .contact-content .section-text {
+     margin-left: 0;
+     margin-right: 0;
+   }
+}
+
+
+.contact-list {
+  list-style: none;
+  margin-top: 30px;
+}
+@media (min-width: 992px) {
+  .contact-list {
+    margin-left: 0; /* Adjust if needed based on subtitle positioning */
+  }
+}
+
+
+.contact-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 25px;
+  text-align: left; /* Ensure text is left-aligned */
+  justify-content: center; /* Center items on mobile */
+}
+@media (min-width: 992px) {
+    .contact-list-item {
+        justify-content: flex-start; /* Align left on desktop */
+    }
+}
+
+
+.contact-item-icon {
+  font-size: 24px;
+  color: var(--accent-color);
+  margin-top: 2px; /* Slight alignment adjustment */
+}
+
+.contact-item-title {
+  color: var(--primary-text);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.contact-info {
+  color: var(--muted-text);
+  font-style: normal;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: color var(--transition-smooth);
+}
+.contact-info:hover {
+  color: var(--primary-text);
+}
+
+.contact-social-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center icons on mobile */
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px; /* Space above social links */
+  /* padding-inline: 40px; Removed padding */
+}
+@media (min-width: 992px) {
+    .contact-social-list {
+        justify-content: flex-start; /* Align left on desktop */
+    }
+}
+
+
+.contact-social-link {
+  position: relative;
+  background: var(--primary-bg); /* Use main bg for contrast */
+  color: var(--muted-text);
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transition: all var(--transition-smooth);
+  font-size: 18px;
+  border: 1px solid var(--secondary-bg); /* Use secondary for border */
+}
+.contact-social-link:hover {
+  background: var(--accent-color);
+  color: var(--primary-bg);
+  transform: translateY(-2px);
+  border-color: var(--accent-color);
+}
+/* Position tooltip above social icons */
+.contact-social-link .tooltip {
+   bottom: calc(100% + 8px);
+   top: auto;
+   left: 50%;
+   transform: translateX(-50%) translateY(5px);
+}
+.contact-social-link:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* Contact Form */
+.contact-form {
+  background: var(--primary-bg); /* Use main bg */
+  padding: clamp(20px, 5vw, 40px);
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px var(--card-shadow);
+  border: 1px solid var(--secondary-bg);
+}
+
+/* Confirmation Message Area */
+.form-message {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-weight: 500;
+  display: none; /* Hidden by default */
+  border: 1px solid transparent;
+}
+.form-message.success {
+  background-color: rgba(76, 175, 80, 0.1); /* Light green */
+  border-color: rgba(76, 175, 80, 0.5);
+  color: #a7f3d0; /* Lighter green text */
+  display: block; /* Show when success class is added */
+}
+.form-message.error {
+  background-color: rgba(244, 67, 54, 0.1); /* Light red */
+  border-color: rgba(244, 67, 54, 0.5);
+  color: #fca5a5; /* Lighter red text */
+  display: block; /* Show when error class is added */
+}
+
+
+.form-wrapper {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  color: var(--muted-text);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block; /* Ensure it takes full width */
+  text-align: left;
+}
+.form-label .optional {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-field {
+  background: var(--secondary-bg);
+  color: var(--primary-text); /* Use primary text color for input */
+  padding: 12px 15px 12px 45px; /* Adjust padding for icon */
+  border-radius: var(--border-radius);
+  border: 1px solid var(--secondary-bg); /* Use secondary bg for border */
+  transition: border-color var(--transition-smooth);
+  width: 100%; /* Ensure full width */
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+}
+.input-field::placeholder {
+    color: var(--muted-text);
+    opacity: 0.7;
+}
+
+/* Icon inside input */
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: var(--muted-text);
+  font-size: 20px;
+  transition: color var(--transition-smooth);
+  pointer-events: none; /* Prevent icon interfering with input focus */
+}
+
+textarea.input-field {
+  min-height: 120px;
+  max-height: 200px;
+  resize: vertical;
+  padding: 12px 15px 12px 45px; /* Consistent padding */
+}
+/* Adjust icon position for textarea */
+.textarea-icon {
+    top: 18px; /* Adjust vertical position */
+    transform: none;
+}
+
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+.input-field:focus + .input-icon {
+  color: var(--accent-color);
+}
+
+/* Submit Button Styling */
+.btn-submit {
+  display: block; /* Make it block */
+  width: 100%; /* Full width */
+  padding: 15px 30px;
+  background: var(--accent-color);
+  color: var(--primary-bg); /* Text color for accent button */
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background var(--transition-smooth), transform var(--transition-fast);
+}
+.btn-submit:hover {
+  background: #4b8fec; /* Slightly darker accent */
+  transform: translateY(-2px);
+}
+/* ***** HIGHLIGHTED CHANGE END ***** */
+
+
+
+/* footer section starts */
+/* --- Footer --- */
+.footer {
+  background-color: var(--secondary-bg); /* Use secondary background */
+  color: var(--muted-text);
+  padding: clamp(40px, 8vh, 60px) clamp(20px, 5vw, 40px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle top border */
+  position: relative; /* Keep relative for z-index stacking */
+  z-index: 10; /* Ensure footer is above the canvas */
+}
+
+/* Use the standard section container for max-width and centering
+.footer .section-container {
+    /* Inherits max-width and margin: 0 auto 
+}*/
+
+.footer-grid {
+  display: grid;
+  gap: 30px 20px; /* Row and column gap */
+  /* Mobile default: 2 columns */
+  grid-template-columns: repeat(2, 1fr);
+  text-align: left; /* Keep text left aligned by default */
+}
+
+/* Tablet and up: 4 columns */
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  }
+}
+
+.footer-column {
+  margin-bottom: 20px; /* Add some space below columns on mobile */
+}
+@media (min-width: 768px) {
+  .footer-column {
+    margin-bottom: 0; /* No extra margin needed on desktop */
+  }
+}
+
+.footer-heading {
+  color: var(--primary-text);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0; /* Remove default padding */
+}
+
+.footer-links li {
+  margin-bottom: 10px; /* Consistent spacing */
+}
+
+.footer-links a {
+  color: var(--muted-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color var(--transition-smooth);
+}
+.footer-links a:hover {
+  color: var(--primary-text);
+}
+
+/* Branding & Copyright Column */
+.footer-branding {
+  /* Mobile: Span full width, centered */
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 30px;
+}
+@media (min-width: 768px) {
+  /* Desktop: Last column, right-aligned */
+  .footer-branding {
+    grid-column: 4 / 5; /* Place in the last column */
+    text-align: right;
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align logo to top */
+    align-items: flex-end; /* Align content to right */
+    height: 100%; /* Allow justify-content */
+  }
+}
+
+
+.footer-logo {
+    margin-bottom: 15px; /* Space below logo */
+}
+.footer-logo a {
+    color: var(--primary-text);
+    font-family: "Saira Stencil One", sans-serif; /* Use same font as Jack's logo */
+    font-size: 1.5rem; /* Slightly smaller */
+    text-decoration: none;
+    display: inline-block; /* Allow alignment */
+}
+.footer-logo span {
+    color: var(--accent-color); /* Use your accent */
+}
+
+
+.copyright {
+  font-size: 0.8rem;
+}
+@media (min-width: 768px) {
+    .copyright {
+        margin-top: auto; /* Push copyright to bottom */
+        padding-top: 10px; /* Add some space if needed */
+    }
+}
+
+
+
+/*  this styling is for download cv buttons */
