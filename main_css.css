@@ -1585,10 +1585,10 @@ textarea.input-field {
   z-index: 10; /* Ensure footer is above the canvas */
 }
 
-/* Use the standard section container for max-width and centering */
+/* Use the standard section container for max-width and centering
 .footer .section-container {
-    /* Inherits max-width and margin: 0 auto */
-}
+    /* Inherits max-width and margin: 0 auto 
+}*/
 
 .footer-grid {
   display: grid;
